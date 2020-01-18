@@ -47,7 +47,7 @@ instance SearchProblem BoardState Operation Int where
       c2 = choose2 lps
       lps = length ps
 
-  cost = const 1
+  cost (BoardState d ps) _ = length ps
 
   terminal (BoardState d ps) = length d == 0 && length ps == 1 && isSorted (ps !! 0)
 
@@ -69,7 +69,7 @@ instance SearchProblem BoardState Operation Int where
 
 
 cardheuristic :: BoardState -> Int
-cardheuristic (BoardState d ps) = length d + length ps - 1
+cardheuristic (BoardState d ps) = 0 -- length d + length ps - 1
 
 
 optimalCardSort :: [Card] -> Maybe [Operation]
