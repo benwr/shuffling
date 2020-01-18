@@ -33,8 +33,7 @@ isSorted (a1 : a2 : as) = a1 < a2 && isSorted (a2 : as)
 instance SearchProblem BoardState Operation Int where
   legalMoves (BoardState d ps) = case d of
       [] -> uncurry Stack <$> stacks
-      _
-        | not (null stacks) -> uncurry Stack <$> stacks
+      _ | not (null stacks) -> uncurry Stack <$> stacks
         | otherwise -> uncurry PlaceCard <$> places
     where
       allstacks = mappend c2 $ swap <$> c2
