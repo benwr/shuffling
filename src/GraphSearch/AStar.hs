@@ -25,7 +25,7 @@ astarStep h = do
           costToCome = pathCost ops
           nextOps = legalMoves s
           s's = map (flip move s) nextOps
-          hs = map (+ costToCome) $ map h s's
+          hs = map (uncurry (+)) $ zip (cost <$> nextOps) $ map (+ costToCome) $ map h s's
           fron'' = fromList $ zip (zip hs s's) $ map (: ops) nextOps
 
 runUntilJust :: State s (Maybe a) -> s -> a
