@@ -13,7 +13,7 @@ def factor(p):
     for i, pi in enumerate(p):
         # the pile index is pi % npiles.
         # But what does that mean about q[i]?
-        # I think it means (pi % npiles) * npiles + floor(i / npiles)?
+        # I think it means (pi % npiles) * npiles + size of pile?
         q.append((pi % npiles) * npiles + pilesizes[pi % npiles])
         pilesizes[pi % npiles] += 1
     compress(q)
