@@ -16,6 +16,7 @@ def factor(p):
         # I think it means (pi % npiles) * npiles + floor(i / npiles)?
         q.append((pi % npiles) * npiles + pilesizes[pi % npiles])
         pilesizes[pi % npiles] += 1
+    compress(q)
 
     # and then we _could_ figure out the second pile index, but
     # it seems easier to just use some quick group theory to get
@@ -26,6 +27,15 @@ def factor(p):
     r = compose(invert(q), p)
 
     return (q, r)
+
+def compress(p):
+    qdict = {pi: i for i, pi in enumerate(p)}
+    missing = 0
+    for i in range(max(p) + 1):
+        if i in qdict:
+            p[qdict[i]] -= missing
+        else:
+            missing += 1
 
 def compose(p, q):
     result = []
@@ -48,3 +58,11 @@ def count_piles(p):
         if not found_pile:
             piles.append([i])
     return len(piles)
+
+def verify(p):
+    q, r = factor(p)
+    npiles = math.ceil(math.sqrt(len(p)))
+    assert count_piles(q) <= npiles
+    assert count_piles(r) <= npiles
+    assert compose(q, r) == p
+    return True
